@@ -1,7 +1,15 @@
+import Header from "./components/Header";
+import { Outlet } from "react-router-dom"
+import { Provider } from "react-redux";
+import store from "./utils/store";
+
 function App() {
   return (
     <>
-      <h1 className="text-3xl text-red-800">App</h1>
+      <Provider store={store}>
+        <Header />
+        <Outlet />
+      </Provider>
     </>
   )
 }
