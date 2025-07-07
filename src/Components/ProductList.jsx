@@ -7,6 +7,7 @@ function ProductList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // fetch the list of products from an API
     useEffect(() => {
         const getProducts = async () => {
             try {
@@ -24,7 +25,7 @@ function ProductList() {
         getProducts();
     }, []);
 
-    // filter the book based on search
+    // filter the product based on search
     const filtered = products.filter(p =>
         p.title.toLowerCase().includes(search.toLowerCase())
     );
@@ -33,9 +34,9 @@ function ProductList() {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
-            <input type="text" placeholder="Search products..." value={search} onChange={e => setSearch(e.target.value)} />
-            <div>
+        <div className='m-5'>
+            <input className='border p-2 w-full mb-5' type="text" placeholder="Search products..." value={search} onChange={e => setSearch(e.target.value)} />
+            <div className='grid grid-cols-1  sm:grid-cols-2 md:grid-cols-4 gap-5'>
                 {filtered.map(product => (
                     <ProductItem key={product.id} product={product} />
                 ))}

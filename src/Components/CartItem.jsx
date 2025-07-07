@@ -6,13 +6,13 @@ function CartItem({ item }) {
     const dispatch = useDispatch();
 
     return (
-        <div>
+        <div className='border-2 border-amber-900 m-5 p-5 rounded-lg flex justify-between items-center'>
             <div>
-                <h2>{item.title}</h2>
-                <p>Rs.{item.price}</p>
-                <input type="number" value={item.quantity} onChange={e => dispatch(updateQuantity({ id: item.id, quantity: +e.target.value }))} min="1" />
+                <h2 className='font-semibold text-lg'>{item.title}</h2>
+                <p className=''>Rs.{item.price}</p>
+                <input className='border-2 border-amber-600 w-15 mt-3 rounded p-1 text-center' type="number" value={item.quantity} onChange={e => dispatch(updateQuantity({ id: item.id, quantity: +e.target.value }))} min="1" />
             </div>
-            <button onClick={() => dispatch(removeItem(item.id))}>Remove</button>
+            <button className='text-red-500 cursor-pointer ' onClick={() => dispatch(removeItem(item.id))}>Remove</button>
         </div>
     )
 }
