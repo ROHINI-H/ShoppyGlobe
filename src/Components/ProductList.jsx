@@ -1,29 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ProductItem from './ProductItem';
+import useFetchProducts from '../hooks/useFetchProducts';
 
 function ProductList() {
-    const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
-    // fetch the list of products from an API
-    useEffect(() => {
-        const getProducts = async () => {
-            try {
-                const res = await fetch('https://dummyjson.com/products');
-                if (!res.ok) throw new Error('Failed to fetch');
-                const data = await res.json();
-                setProducts(data.products);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        getProducts();
-    }, []);
+    const { products, error, loading } = useFetchProducts();
 
     // filter the product based on search
     const filtered = products.filter(p =>

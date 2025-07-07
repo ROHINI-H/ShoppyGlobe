@@ -1,14 +1,18 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import ProductList from './Components/ProductList.jsx'
-import ProductDetail from './Components/ProductDetail.jsx'
-import Cart from './Components/Cart.jsx'
-import Checkout from './Components/Checkout.jsx'
-import NotFound from './Components/NotFound.jsx'
+import { lazy } from 'react'
 
+// Performance Optimatization by lazy-loading
+const ProductList = lazy(() => import('./Components/ProductList.jsx'))
+const ProductDetail = lazy(() => import('./Components/ProductDetail.jsx'))
+const Cart = lazy(() => import("./Components/Cart.jsx"))
+const Checkout = lazy(() => import('./Components/Checkout.jsx'))
+const NotFound = lazy(() => import('./Components/NotFound.jsx'))
+
+// create the router configuration
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -16,22 +20,42 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <ProductList />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProductList />
+          </Suspense>
+        ),
       },
       {
         path: "/product/:id",
-        element: <ProductDetail />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProductDetail />
+          </Suspense>
+        ),
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Cart />
+          </Suspense>
+        ),
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Checkout />
+          </Suspense>
+        ),
       },
     ],
-    errorElement: <NotFound />
+    errorElement: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <NotFound />
+      </Suspense>
+    ),
   }
 ])
 

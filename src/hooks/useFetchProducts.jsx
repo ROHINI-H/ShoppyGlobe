@@ -1,8 +1,7 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function useFetchProducts() {
-    const [product, setProduct] = useState([]);
+    const [products, setProducts] = useState([]);
     // For error Handling
     const [error, setError] = useState(null);
     // For loading UI
@@ -15,7 +14,7 @@ function useFetchProducts() {
                 const res = await fetch('https://dummyjson.com/products');
                 if (!res.ok) throw new Error('Failed to fetch products');
                 const data = await res.json();
-                setProduct(data.product);
+                setProducts(data.products);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -25,7 +24,7 @@ function useFetchProducts() {
         getProducts();
     }, []);
 
-    return { product, error, loading };
+    return { products, error, loading };
 }
 
 export default useFetchProducts;
